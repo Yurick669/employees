@@ -1,9 +1,13 @@
-package pro.sky.employees;
+package pro.sky.employees.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pro.sky.employees.Employee;
+import pro.sky.employees.Service.EmployeeService;
+
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/employee")
@@ -36,6 +40,11 @@ public class EmployeeController {
     @GetMapping("/find")
     public Employee find(@RequestParam String firstName, @RequestParam String lastName)  {
         return employeeService.find(firstName,lastName);
+    }
+
+    @GetMapping("/all")
+    public Collection<Employee> allEmployees() {
+        return (employeeService.allEmployees());
     }
 
     private String generateMessage(Employee employee, String status) {

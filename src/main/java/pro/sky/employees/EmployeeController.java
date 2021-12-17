@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping
+@RequestMapping("/employee")
 public class EmployeeController {
+
+    @GetMapping()
+    public String greeting () {
+        return "Добро пожаловать в книгу учёта!";
+    }
 
     private final EmployeeService employeeService;
 
@@ -15,31 +20,27 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping()
-    public String greeting () {
-        return "Добро пожаловать в книгу учёта!";
-    }
 
     @GetMapping("/add")
-    public String add(@RequestParam String firstname, @RequestParam String lastname)  {
-        Employee result = employeeService.add(firstname,lastname);
-        return generateMessage(result, "Создан");
+    public String add(@RequestParam String firstName, @RequestParam String lastName)  {
+        Employee result = employeeService.add(firstName,lastName);
+        return generateMessage(result, "- успешно создан");
     }
+
     @GetMapping("/remove")
-    public String remove(@RequestParam String firstname, @RequestParam String lastname)  {
-        Employee result = employeeService.remove(firstname,lastname);
-        return generateMessage(result, "Удалён");
+    public String remove(@RequestParam String firstName, @RequestParam String lastName)  {
+        Employee result = employeeService.remove(firstName,lastName);
+        return generateMessage(result, "- удалён");
     }
 
     @GetMapping("/find")
-    public Employee find(@RequestParam String firstname, @RequestParam String lastname)  {
-        return employeeService.find(firstname,lastname);
+    public Employee find(@RequestParam String firstName, @RequestParam String lastName)  {
+        return employeeService.find(firstName,lastName);
     }
-
 
     private String generateMessage(Employee employee, String status) {
 
-        return String.format("Сотрудник %s %s %s.", employee.getLastName(), employee.getLastName(), status);
+        return String.format("Сотрудник: %s %s %s.", employee.getFirstName(), employee.getLastName(), status);
     }
 
 }

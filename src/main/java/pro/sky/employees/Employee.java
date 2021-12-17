@@ -34,6 +34,6 @@ public class Employee {
     }
     @Override
     public String toString() {
-        return String.format("Сотрудник: %s %s", lastName, firstName);
+        return String.format("Сотрудник: %s %s", firstName, lastName);
     }
 }

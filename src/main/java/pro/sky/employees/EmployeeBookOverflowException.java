@@ -3,8 +3,8 @@ package pro.sky.employees;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.INSUFFICIENT_STORAGE)
-public class EmployeeBookOverflowException extends Throwable {
+@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+public class EmployeeBookOverflowException extends RuntimeException {
 
     public EmployeeBookOverflowException() {
         super ("Переполнено");

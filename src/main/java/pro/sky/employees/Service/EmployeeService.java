@@ -1,4 +1,8 @@
-package pro.sky.employees;
+package pro.sky.employees.Service;
+
+import pro.sky.employees.Employee;
+
+import java.util.Set;
 
 public interface EmployeeService {
 
@@ -11,4 +15,7 @@ public interface EmployeeService {
     Employee remove(Employee employee);
 
     Employee find(String firstName, String lastName);
+
+    Set<Employee> allEmployees();
+
 }

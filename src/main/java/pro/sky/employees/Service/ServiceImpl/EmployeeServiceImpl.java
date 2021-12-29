@@ -6,8 +6,7 @@ import pro.sky.employees.Exceptions.EmployeeExistsException;
 import pro.sky.employees.Exceptions.EmployeeNotFoundExtсeption;
 import pro.sky.employees.Service.EmployeeService;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -15,26 +14,25 @@ import java.util.Set;
 public class EmployeeServiceImpl implements EmployeeService {
 
 
-    private final Map<String, Employee> employees;
+    private final Set<Employee> employees;
 
     public EmployeeServiceImpl() {
-        employees = new LinkedHashMap<>();
+        employees = new HashSet<>();
     }
 
     @Override
-    public Employee add(String firstName, String lastName) {
-        Employee newEmployee = new Employee(firstName, lastName);
+    public Employee add(String firstName, String lastName, int department, int salary) {
+        Employee newEmployee = new Employee(firstName, lastName, department, salary);
         return add(newEmployee);
     }
 
     @Override
     public Employee add(Employee employee) {
 
-        String key = getKey(employee);
-        if (employees.containsKey(key)) {
+        boolean employeeAlreadyExist = !employees.add(employee);
+        if (employeeAlreadyExist) {
             throw new EmployeeExistsException();
         }
-        employees.put(key, employee);
 
         return employee;
     }
@@ -47,8 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee remove(Employee employee) {
-        Employee removeEmployee = employees.remove(getKey(employee));
-        if (removeEmployee == null) {
+        if (!employees.remove(employee)) {
             throw new EmployeeNotFoundExtсeption();
         }
         return employee;
@@ -56,9 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee find(String firstName, String lastName) {
-        String key = getKey(firstName, lastName);
-        Employee employee = employees.get(key);
-        if (employee == null) {
+        Employee employee = new Employee(firstName, lastName);
+        if (!employees.contains(employee)) {
             throw new EmployeeNotFoundExtсeption();
         }
         return employee;
@@ -66,16 +62,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Set<Employee> allEmployees() {
-        return Set.copyOf(employees.values());
+        return Set.copyOf(employees);
     }
 
 
     private String getKey(Employee employee) {
-        return getKey(employee.getFirstName(), employee.getLastName());
+        return getKey(employee.getFirstName(), employee.getLastName(), employee.getDepartment(), employee.getSalary());
     }
 
-    private String getKey(String firstName, String lastName) {
-        return firstName + " " + lastName;
+    private String getKey(String firstName, String lastName, int department, int salary) {
+        return firstName + " " + lastName + " " + department + " " + salary;
     }
 
 

@@ -6,7 +6,8 @@ import pro.sky.employees.Exceptions.EmployeeExistsException;
 import pro.sky.employees.Exceptions.EmployeeNotFoundExtсeption;
 import pro.sky.employees.Service.EmployeeService;
 
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -14,10 +15,10 @@ import java.util.Set;
 public class EmployeeServiceImpl implements EmployeeService {
 
 
-    private final Set<Employee> employees;
+    private final Map<String, Employee> employees;
 
     public EmployeeServiceImpl() {
-        employees = new HashSet<>();
+        employees = new LinkedHashMap<>();
     }
 
     @Override
@@ -28,10 +29,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(Employee employee) {
-        boolean alreadyExist = !employees.add(employee);
-        if (alreadyExist) {
+
+        String key = getKey(employee);
+        if (employees.containsKey(key)) {
             throw new EmployeeExistsException();
         }
+        employees.put(key, employee);
 
         return employee;
     }
@@ -44,8 +47,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee remove(Employee employee) {
-        boolean removeEmployee = !employees.remove(employee);
-        if (removeEmployee) {
+        Employee removeEmployee = employees.remove(getKey(employee));
+        if (removeEmployee == null) {
             throw new EmployeeNotFoundExtсeption();
         }
         return employee;
@@ -53,9 +56,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee find(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
-        boolean containsEmployee = !employees.contains(employee);
-        if (containsEmployee) {
+        String key = getKey(firstName, lastName);
+        Employee employee = employees.get(key);
+        if (employee == null) {
             throw new EmployeeNotFoundExtсeption();
         }
         return employee;
@@ -63,7 +66,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Set<Employee> allEmployees() {
-        return Set.copyOf(employees);
+        return Set.copyOf(employees.values());
     }
+
+
+    private String getKey(Employee employee) {
+        return getKey(employee.getFirstName(), employee.getLastName());
+    }
+
+    private String getKey(String firstName, String lastName) {
+        return firstName + " " + lastName;
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package pro.sky.employees.Service.ServiceImpl;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.employees.Employee;
 import pro.sky.employees.Exceptions.EmployeeExistsException;
@@ -22,6 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName, int department, int salary) {
+        if (StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)) {
+            firstName = StringUtils.capitalize(firstName);
+            lastName = StringUtils.capitalize(lastName);
+        }
         Employee newEmployee = new Employee(firstName, lastName, department, salary);
         return add(newEmployee);
     }

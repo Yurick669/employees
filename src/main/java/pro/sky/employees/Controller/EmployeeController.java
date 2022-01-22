@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.employees.Employee;
 import pro.sky.employees.Service.EmployeeService;
-
 import java.util.Collection;
 
 @RestController
@@ -30,7 +29,7 @@ public class EmployeeController {
                       @RequestParam String lastName,
                       @RequestParam(name = "departmentId", required = false) int department,
                       @RequestParam(required = false) int salary
-    )  {
+    ) throws IllegalAccessException {
         Employee result = employeeService.add(firstName,lastName, department, salary);
         return generateMessage(result, "- успешно создан");
     }

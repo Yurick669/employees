@@ -6,7 +6,7 @@ import java.util.Set;
 
 public interface EmployeeService {
 
-    Employee add(String firstName, String lastName, int department, int salary);
+    Employee add(String firstName, String lastName, int department, int salary) throws IllegalAccessException;
 
     Employee add(Employee employee);
 

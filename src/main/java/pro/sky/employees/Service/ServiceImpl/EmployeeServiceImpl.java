@@ -26,6 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)) {
             firstName = StringUtils.capitalize(firstName);
             lastName = StringUtils.capitalize(lastName);
+        } else {
+            throw new IllegalArgumentException();
         }
         Employee newEmployee = new Employee(firstName, lastName, department, salary);
         return add(newEmployee);

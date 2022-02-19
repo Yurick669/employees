@@ -4,13 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class EmployeeNotFoundExtсeption extends RuntimeException {
+public class EmployeeNotFoundException extends Throwable {
 
-    public EmployeeNotFoundExtсeption(String s) {
+
+    public EmployeeNotFoundException(String s) {
         super("Такого нет");
     }
 
-    public EmployeeNotFoundExtсeption() {
+    public EmployeeNotFoundException() {
 
     }
+
 }

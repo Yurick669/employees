@@ -4,10 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.employees.Employee;
 import pro.sky.employees.Exceptions.EmployeeExistsException;
-import pro.sky.employees.Exceptions.EmployeeNotFoundExtсeption;
+import pro.sky.employees.Exceptions.EmployeeNotFoundException;
 import pro.sky.employees.Service.EmployeeService;
-
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -45,31 +45,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee remove(String firstName, String lastName) {
+    public Employee remove(String firstName, String lastName) throws EmployeeNotFoundException {
         Employee newEmployee = new Employee(firstName, lastName);
         return remove(newEmployee);
     }
 
     @Override
-    public Employee remove(Employee employee) {
+    public Employee remove(Employee employee) throws EmployeeNotFoundException {
         if (!employees.remove(employee)) {
-            throw new EmployeeNotFoundExtсeption();
+            throw new EmployeeNotFoundException();
         }
         return employee;
     }
 
     @Override
-    public Employee find(String firstName, String lastName) {
+    public Employee find(String firstName, String lastName) throws EmployeeNotFoundException {
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee)) {
-            throw new EmployeeNotFoundExtсeption();
+            throw new EmployeeNotFoundException();
         }
         return employee;
     }
 
     @Override
-    public Set<Employee> allEmployees() {
-        return Set.copyOf(employees);
+    public List<Employee> allEmployees() {
+        return (List<Employee>) Set.copyOf(employees);
     }
 
 

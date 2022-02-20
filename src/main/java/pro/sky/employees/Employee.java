@@ -2,6 +2,7 @@ package pro.sky.employees;
 
 import java.util.Objects;
 
+
 public class Employee {
 
     private final String firstName;
@@ -74,5 +75,6 @@ public class Employee {
                 ", salary=" + salary +
                 '}';
     }
+
 
 }

@@ -1,13 +1,12 @@
 package pro.sky.employees.Service.ServiceImpl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.employees.Employee;
 import pro.sky.employees.Exceptions.EmployeeExistsException;
-import pro.sky.employees.Exceptions.EmployeeNotFoundException;
+import pro.sky.employees.Exceptions.EmployeeNotFoundExtсeption;
 import pro.sky.employees.Service.EmployeeService;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -23,12 +22,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee add(String firstName, String lastName, int department, int salary) {
-        if (StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)) {
-            firstName = StringUtils.capitalize(firstName);
-            lastName = StringUtils.capitalize(lastName);
-        } else {
-            throw new IllegalArgumentException();
-        }
         Employee newEmployee = new Employee(firstName, lastName, department, salary);
         return add(newEmployee);
     }
@@ -45,31 +38,31 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee remove(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee remove(String firstName, String lastName) {
         Employee newEmployee = new Employee(firstName, lastName);
         return remove(newEmployee);
     }
 
     @Override
-    public Employee remove(Employee employee) throws EmployeeNotFoundException {
+    public Employee remove(Employee employee) {
         if (!employees.remove(employee)) {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundExtсeption();
         }
         return employee;
     }
 
     @Override
-    public Employee find(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee find(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee)) {
-            throw new EmployeeNotFoundException();
+            throw new EmployeeNotFoundExtсeption();
         }
         return employee;
     }
 
     @Override
-    public List<Employee> allEmployees() {
-        return (List<Employee>) Set.copyOf(employees);
+    public Set<Employee> allEmployees() {
+        return Set.copyOf(employees);
     }
 
 

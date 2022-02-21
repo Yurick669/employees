@@ -2,11 +2,14 @@ package pro.sky.employees.Service.ServiceImpl;
 
 import org.springframework.stereotype.Service;
 import pro.sky.employees.Employee;
-import pro.sky.employees.Exceptions.EmployeeNotFoundException;
+import pro.sky.employees.Exceptions.EmployeeNotFoundExtсeption;
 import pro.sky.employees.Service.DepartmentService;
 import pro.sky.employees.Service.EmployeeService;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,19 +23,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 
     @Override
-    public Employee employeeMinSalary(int department) throws EmployeeNotFoundException {
+    public Employee employeeMinSalary(int department) {
         return employeeService.allEmployees().stream()
                 .filter(employee -> employee.hisDepartment(department))
                 .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Работник в " + department + "не найден"));
+                .orElseThrow(() -> new EmployeeNotFoundExtсeption("Работник в " + department + "не найден"));
     }
 
     @Override
-    public Employee employeeMaxSalary(int department) throws EmployeeNotFoundException {
+    public Employee employeeMaxSalary(int department) {
         return employeeService.allEmployees().stream()
                 .filter(employee -> employee.hisDepartment(department))
-                .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Работник в " + department + "не найден"));
+                .min(Comparator.comparing(Employee::getSalary))
+                .orElseThrow(() -> new EmployeeNotFoundExtсeption("Работник в " + department + "не найден"));
     }
 
     @Override

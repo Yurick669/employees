@@ -1,23 +1,21 @@
 package pro.sky.employees.Service;
 
 import pro.sky.employees.Employee;
-import pro.sky.employees.Exceptions.EmployeeNotFoundException;
 
-import java.util.List;
+import java.util.Set;
 
 public interface EmployeeService {
 
     Employee add(String firstName, String lastName, int department, int salary);
 
-
     Employee add(Employee employee);
 
-    Employee remove(String firstName, String lastName) throws EmployeeNotFoundException;
+    Employee remove(String firstName, String lastName);
 
-    Employee remove(Employee employee) throws EmployeeNotFoundException;
+    Employee remove(Employee employee);
 
-    Employee find(String firstName, String lastName) throws EmployeeNotFoundException;
+    Employee find(String firstName, String lastName);
 
-    List<Employee> allEmployees();
+    Set<Employee> allEmployees();
 
 }

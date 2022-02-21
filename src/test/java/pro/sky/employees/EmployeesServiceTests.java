@@ -72,6 +72,7 @@ class EmployeesServiceTests {
 	void testFindNoAddEmployee() {
 		Assertions.assertThrowsExactly(EmployeeExistsException.class, () -> out.find(FIRST_NAME_1, LAST_NAME_1));
 
+
 	}
 	@Test
 	void testAllEmployee() {

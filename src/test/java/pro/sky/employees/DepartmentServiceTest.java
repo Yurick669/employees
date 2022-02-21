@@ -17,6 +17,7 @@ import static pro.sky.employees.EmployeesServiceInvariableTest.*;
 @ExtendWith(MockitoExtension.class)
 public class DepartmentServiceTest {
 
+
     @Mock
     private EmployeeService employeeServiceMock;
 

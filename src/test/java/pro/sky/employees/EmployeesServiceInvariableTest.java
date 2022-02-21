@@ -12,4 +12,5 @@ public interface EmployeesServiceInvariableTest {
     int DEPARTMENT_2 = 2;
     int SALARY_2 = 120000;
 
+
 }
